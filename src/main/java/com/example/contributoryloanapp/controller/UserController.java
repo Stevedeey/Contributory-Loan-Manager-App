@@ -4,6 +4,7 @@ import com.example.contributoryloanapp.exception.ResourceNotFoundException;
 import com.example.contributoryloanapp.model.User;
 import com.example.contributoryloanapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,4 +43,11 @@ public class UserController {
                 () -> new ResourceNotFoundException("User with the Id: "+id +" not found!!!"));
                 return ResponseEntity.ok().body(user);
     }
+
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable(value = "id") Long id){
+        User user = userService.findById(id).get();
+        userService.delete(user);
+    }
+
 }
