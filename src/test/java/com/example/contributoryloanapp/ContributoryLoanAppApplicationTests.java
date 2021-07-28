@@ -1,14 +1,16 @@
 package com.example.contributoryloanapp;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
-//@SpringBootTest
-//class ContributoryLoanAppApplicationTests {
-//
-//    @Test
-//    void contextLoads() {
-//    }
+@ExtendWith(MockitoExtension.class)
+class ContributoryLoanAppApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
 
 
-//}
+}
