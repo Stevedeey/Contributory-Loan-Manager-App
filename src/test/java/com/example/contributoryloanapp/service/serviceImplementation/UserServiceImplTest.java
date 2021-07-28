@@ -28,6 +28,7 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {UserServiceImpl.class})
 @ExtendWith(MockitoExtension.class)
+
 class UserServiceImplTest {
     @Mock
     private UserRepository userRepository;
