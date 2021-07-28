@@ -3,6 +3,7 @@ package com.example.contributoryloanapp.controller;
 import com.example.contributoryloanapp.exception.ResourceNotFoundException;
 import com.example.contributoryloanapp.model.User;
 import com.example.contributoryloanapp.service.UserService;
+import com.example.contributoryloanapp.service.serviceImplementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,9 @@ import java.util.List;
 @RequestMapping("/api")
 public class UserController {
 
+
+    @Autowired
+    private UserServiceImpl userServiceImpl;
 
     private UserService userService;
 
@@ -29,7 +33,10 @@ public class UserController {
 
     @PostMapping("/employee")
     public User saveUser(@RequestBody User user){
-        return userService.save(user);
+        User person =  userServiceImpl.createUser(user);
+
+        return  userService.save(person);
+
     }
 
     @GetMapping("/all")
