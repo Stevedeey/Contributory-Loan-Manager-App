@@ -47,4 +47,11 @@ public class UserController {
                 () -> new ResourceNotFoundException("User with the Id: "+id +" not found!!!"));
                 return ResponseEntity.ok().body(user);
     }
+
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable(value = "id") Long id){
+        User user = service.findById(id).get();
+        service.delete(user);
+    }
+
 }
