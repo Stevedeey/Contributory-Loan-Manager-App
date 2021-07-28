@@ -44,8 +44,7 @@ public class UserController {
     @GetMapping("/find-user")
     public ResponseEntity<User> findUser(@PathVariable(value = "id") Long id){
         User user = service.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("User with the Id: "+id +" not found!!!"));
-                return ResponseEntity.ok().body(user);
+                () -> new ResourceNotFoundException("User with the Id: "+id +" not found!!!")); return ResponseEntity.ok().body(user);
     }
 
     @DeleteMapping("/users/{id}")
