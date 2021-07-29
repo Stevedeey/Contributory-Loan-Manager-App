@@ -1,5 +1,6 @@
 package com.example.contributoryloanapp.service.serviceImplementation;
 
+
 import com.example.contributoryloanapp.model.User;
 import com.example.contributoryloanapp.repository.UserRepository;
 
@@ -38,9 +39,11 @@ class UserServiceImplTest {
 
     @Test
     void justTest() {
+
         boolean flag = true;
         assertTrue(flag);
     }
+
 
     @Test
     public void testCreateUser() {
@@ -107,5 +110,6 @@ class UserServiceImplTest {
         verify(user1).getLastName();
         verify(user1).getPassword();
     }
+
 
 }
