@@ -46,6 +46,7 @@ public class UserController {
         User user = service.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User with the Id: "+id +" not found!!!"));
                 return ResponseEntity.ok().body(user);
+
     }
 
     @DeleteMapping("/users/{id}")
