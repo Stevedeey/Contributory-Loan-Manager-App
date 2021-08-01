@@ -3,6 +3,7 @@ package com.example.contributoryloanapp.security;
 import com.example.contributoryloanapp.security.jwt.AuthEntryPointJwt;
 import com.example.contributoryloanapp.security.jwt.AuthTokenFilter;
 import com.example.contributoryloanapp.security.services.UserDetailsServiceImpl;
+import com.example.contributoryloanapp.utils.SecurityAuthorisationConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -59,6 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
+               .antMatchers(SecurityAuthorisationConstants.PUBLIC_URIS).permitAll()
                .anyRequest().authenticated();
 
             http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -1,10 +1,17 @@
 package com.example.contributoryloanapp.payload.response;
 
-public class MessageResponse {
+import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
+
+public class MessageResponse extends RuntimeException{
     private String message;
 
+    public MessageResponse(String message, HttpStatus status) {
+        super(message);
+    }
+
     public MessageResponse(String message) {
-        this.message = message;
+        super(message);
     }
 
     public String getMessage() {

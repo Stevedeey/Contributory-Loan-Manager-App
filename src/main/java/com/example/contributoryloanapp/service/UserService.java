@@ -2,9 +2,10 @@ package com.example.contributoryloanapp.service;
 
 
 import com.example.contributoryloanapp.model.User;
+import com.example.contributoryloanapp.payload.request.SignupRequest;
 
 
 public interface UserService {
-    public User createUser(User user);
-    User saveUser(User user);
+
+    User saveUser(SignupRequest signupRequest);
 }
