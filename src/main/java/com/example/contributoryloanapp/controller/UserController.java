@@ -28,13 +28,6 @@ public class UserController {
         return  "Hello World, I am liking it";
     }
 
-    @PostMapping("/employee")
-    public ResponseEntity<User> saveUser(@RequestBody User user){
-        User person =  userService.createUser(user);
-
-        return new ResponseEntity<>(person, HttpStatus.OK);
-
-    }
 
     @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers(){

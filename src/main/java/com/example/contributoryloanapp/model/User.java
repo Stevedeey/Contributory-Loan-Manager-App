@@ -70,14 +70,29 @@ public class User extends BaseModel{
         this.password = password;
     }
 
-    public User(String firstName, String lastName, String email, String gender, String dateOfBirth, String password) {
+    public User(String username, String firstName, String lastName, String email,
+                String gender, String dateOfBirth, String password) {
+
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.password = password;
+
     }
 
-
+    public User(String username, String firstName, String lastName,
+                String email, String gender, String dateOfBirth,
+                String password, Set<Role> roles) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.password = password;
+        this.roles = roles;
+    }
 }
