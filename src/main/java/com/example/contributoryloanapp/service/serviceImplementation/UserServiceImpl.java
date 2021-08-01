@@ -15,10 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
-
 import java.util.Set;
 
 @Service
+
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -63,63 +63,9 @@ public class UserServiceImpl implements UserService {
 
         user.setRoles(roles);
 
-       userRepository.save(user);
+        userRepository.save(user);
 
         return user;
     }
-//    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest){
-//        if(userRepository.existsByUsername(signupRequest.getUsername())){
-//            return ResponseEntity
-//                    .badRequest()
-//                    .body(new MessageResponse("Username is already taken"));
-//        }
-//
-//        if(userRepository.existsByEmail(signupRequest.getEmail())){
-//            return ResponseEntity
-//                    .badRequest()
-//                    .body(new MessageResponse("Error: Email specified is already in use"));
-//        }
-//
-//        User user = new User(signupRequest.getUsername(),
-//                signupRequest.getEmail(),
-//                passwordEncoder.encode(signupRequest.getPassword()));
-//
-//
-//        Set<String> strRoles = signupRequest.getRole();
-//        Set<Role> roles = new HashSet<>();
-//
-//        if(strRoles == null){
-//            Role userRole = roleRepository.findByName(ERole.BORROWER)
-//                    .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-//            roles.add(userRole);
-//        }else {
-//            strRoles.forEach(role ->{
-//                switch (role){
-//                    case "admin":
-//                        Role adminRole = roleRepository.findByName(ERole.ADMIN)
-//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-//
-//                        roles.add(adminRole);
-//                        break;
-//                    case "member":
-//                        Role memberRole = roleRepository.findByName(ERole.MEMBER)
-//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-//
-//                        roles.add(memberRole);
-//                        break;
-//                    default:
-//                        Role roleBorrower = roleRepository.findByName(ERole.BORROWER)
-//                                .orElseThrow(()-> new RuntimeException("Error: Role is not found"));
-//
-//                        roles.add(roleBorrower);
-//                }
-//            });
-//        }
-//        user.setRoles(roles);
-//        userRepository.save(user);
-//
-//        return ResponseEntity.ok(new MessageResponse("User Resgisterd succesfully"));
-//    }
-
 
 }
