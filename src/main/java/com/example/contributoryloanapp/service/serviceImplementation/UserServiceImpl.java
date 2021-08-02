@@ -1,6 +1,7 @@
 package com.example.contributoryloanapp.service.serviceImplementation;
 
 
+import com.example.contributoryloanapp.exception.ApiRequestException;
 import com.example.contributoryloanapp.model.Role;
 import com.example.contributoryloanapp.model.User;
 import com.example.contributoryloanapp.payload.request.SignupRequest;
@@ -42,13 +43,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(SignupRequest signupRequest) {
+
+
         if (userRepository.existsByUsername(signupRequest.getUsername())) {
-            throw new MessageResponse("Username is already taken");
+          throw  new ApiRequestException("Username is already taken");
+
         }
 
         if (userRepository.existsByEmail(signupRequest.getEmail())) {
-            throw new MessageResponse("Email is already exist");
+          throw new ApiRequestException("Email is already exist");
+
         }
+
+        if (signupRequest.getEmail() == "") {
+            throw  new ApiRequestException("Email cannot be empty!!!");
+
+        }
+
 
         System.out.println("I got into the saveUser RequestBody " + signupRequest);
 

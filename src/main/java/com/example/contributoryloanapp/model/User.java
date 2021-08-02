@@ -19,16 +19,18 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "users",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "username"),
-                @UniqueConstraint(columnNames = "email")
-        })
+//@Table(name = "users",
+//        uniqueConstraints = {
+//                @UniqueConstraint(columnNames = "username"),
+//                @UniqueConstraint(columnNames = "email")
+//        })
+
+@Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
 public class User extends BaseModel{
 
-    @NotBlank
+
     @Size(max = 20)
     private String username;
 
@@ -38,7 +40,7 @@ public class User extends BaseModel{
     @Column(name = "last_name")
     private String lastName;
 
-    @NotBlank
+    @NotNull
     @Size(max = 50)
     @Email
     private  String email;

@@ -1,9 +1,8 @@
 package com.example.contributoryloanapp.controller;
 
-import com.example.contributoryloanapp.exception.ResourceNotFoundException;
+import com.example.contributoryloanapp.exception.ApiRequestException;
 import com.example.contributoryloanapp.model.User;
 import com.example.contributoryloanapp.repository.UserRepository;
-import com.example.contributoryloanapp.service.UserService;
 import com.example.contributoryloanapp.service.serviceImplementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +36,7 @@ public class UserController {
     @GetMapping("/find-user")
     public ResponseEntity<User> findUser(@PathVariable(value = "id") Long id){
         User user = service.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("User with the Id: "+id +" not found!!!"));
+                () -> new ApiRequestException("User with the Id: "+id +" not found!!!"));
                 return ResponseEntity.ok().body(user);
 
     }

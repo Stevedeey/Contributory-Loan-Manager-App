@@ -19,6 +19,8 @@ public class RoleAssignment {
             Role memberRole = roleRepository.findByName(ERole.BORROWER)
                     .orElseThrow(() -> new RuntimeException("Error: Role not found for the user"));
 
+            System.out.println("MEMBER ROLE!!1"+ memberRole);
+
             roles.add(memberRole);
             System.out.println("THE ROLES STATE AFTER NULL: " + roles);
         }else{

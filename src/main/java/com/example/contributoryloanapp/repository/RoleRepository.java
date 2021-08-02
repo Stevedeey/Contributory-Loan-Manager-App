@@ -3,6 +3,7 @@ package com.example.contributoryloanapp.repository;
 import com.example.contributoryloanapp.model.ERole;
 import com.example.contributoryloanapp.model.Role;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
