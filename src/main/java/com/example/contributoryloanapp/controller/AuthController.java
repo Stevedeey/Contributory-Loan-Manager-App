@@ -54,9 +54,10 @@ public class AuthController {
 
 
     @PostMapping("/signup")
-    public UserResponseDTO registerUser(@Valid @RequestBody SignupRequest signupRequest) throws UnirestException {
-        User user = userService.saveUser(signupRequest);
-        return UserResponseDTO.build(user);
+    public UserResponseDTO registerUser(@Valid @RequestBody SignupRequest signupRequest){
+
+        return UserResponseDTO.build(userService.saveUser(signupRequest));
+
     }
 
 }
