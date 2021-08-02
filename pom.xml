@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.0</version>
+        <version>2.5.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.decagon</groupId>
-    <artifactId>Safari-Web-Store</artifactId>
+    <groupId>com.example</groupId>
+    <artifactId>ContributoryLoanApp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Safari-Web-Store</name>
-    <description>Safari-Web-Store</description>
+    <name>ContributoryLoanApp</name>
+    <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -151,6 +151,8 @@
             <artifactId>springfox-boot-starter</artifactId>
             <version>3.0.0</version>
         </dependency>
+
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
@@ -190,15 +192,16 @@
             <version>4.5.12</version>
         </dependency>
 
+
+
     </dependencies>
 
     <build>
-        <finalName>safari-web-store</finalName>
+        <finalName>contributory loan app</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.5.0</version>
                 <configuration>
                     <excludes>
                         <exclude>
