@@ -5,7 +5,6 @@ import com.example.contributoryloanapp.exception.ApiRequestException;
 import com.example.contributoryloanapp.model.Role;
 import com.example.contributoryloanapp.model.User;
 import com.example.contributoryloanapp.payload.request.SignupRequest;
-import com.example.contributoryloanapp.payload.response.MessageResponse;
 import com.example.contributoryloanapp.repository.RoleRepository;
 import com.example.contributoryloanapp.repository.UserRepository;
 import com.example.contributoryloanapp.service.UserService;
@@ -54,14 +53,6 @@ public class UserServiceImpl implements UserService {
           throw new ApiRequestException("Email is already exist");
 
         }
-
-        if (signupRequest.getEmail() == "") {
-            throw  new ApiRequestException("Email cannot be empty!!!");
-
-        }
-
-
-        System.out.println("I got into the saveUser RequestBody " + signupRequest);
 
 
         User user = new User(signupRequest.getUsername(), signupRequest.getFirstName(),

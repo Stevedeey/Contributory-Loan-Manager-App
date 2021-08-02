@@ -13,7 +13,6 @@ public class ApiException {
     public ApiException(String message,
                         HttpStatus httpStatus, ZonedDateTime timestamp) {
         this.message = message;
-
         this.httpStatus = httpStatus;
         this.timestamp = timestamp;
     }
