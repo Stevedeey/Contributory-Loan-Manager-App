@@ -2,6 +2,7 @@ package com.example.contributoryloanapp.exception;
 
 
 public class ResourceNotFoundException extends RuntimeException {
+    //exception
     public ResourceNotFoundException(String message) {
         super(message);
     }
