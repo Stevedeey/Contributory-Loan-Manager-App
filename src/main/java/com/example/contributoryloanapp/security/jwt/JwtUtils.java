@@ -6,9 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.function.Function;
 
 @Component
 public class JwtUtils {
@@ -20,7 +22,10 @@ public class JwtUtils {
     @Value("${contributoryapp.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
+
+
     public String generateJwtToken(Authentication authentication) {
+        //CREATING AND VALIDATING EXISTING JWT
 
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
@@ -54,4 +59,36 @@ public class JwtUtils {
 
         return false;
     }
+
+    /*
+    * Some other JWT utility methods we might need later
+    * */
+    private Date expirationDate(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
+    private <T> T extractClaim(String token, Function<Claims,T> claimsResolver){
+        final Claims claims = extractAllClaims(token);
+        return  claimsResolver.apply(claims);
+    }
+
+    private Claims extractAllClaims(String token){
+          return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+    }
+
+    private Boolean isTokenExpired(String token){
+        return  expirationDate(token).before(new Date());
+    }
+
+    private  String extractUsername(String token){
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    private Boolean validateToken2(String token, UserDetails userDetails){
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+
+    }
+
+
 }

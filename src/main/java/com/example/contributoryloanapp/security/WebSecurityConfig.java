@@ -57,11 +57,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
        http
                .csrf().disable()
-               .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-               .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-               .authorizeRequests().antMatchers("/api/auth/**").permitAll()
+               .exceptionHandling()
+               .authenticationEntryPoint(unauthorizedHandler).and()
+               .sessionManagement()
+               .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()  //telling SP.SEC not to manage state
+               .authorizeRequests()
+               .antMatchers("/api/auth/**").permitAll()
                .antMatchers(SecurityAuthorisationConstants.PUBLIC_URIS).permitAll()
-               .anyRequest().authenticated();
+               .anyRequest()
+               .authenticated();
 
             http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 

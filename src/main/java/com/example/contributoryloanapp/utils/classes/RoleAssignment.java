@@ -1,4 +1,4 @@
-package com.example.contributoryloanapp.utils;
+package com.example.contributoryloanapp.utils.classes;
 
 import com.example.contributoryloanapp.exception.ApiRequestException;
 import com.example.contributoryloanapp.model.ERole;
