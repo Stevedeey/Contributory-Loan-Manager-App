@@ -6,15 +6,18 @@ import com.example.contributoryloanapp.model.Role;
 import com.example.contributoryloanapp.repository.RoleRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Component
 public class RoleAssignment {
 
+//    public Set<Role> assignRole(Set<String> strRoles, RoleRepository roleRepository){
     public Set<Role> assignRole(Set<String> strRoles, RoleRepository roleRepository){
 
-        Set<Role> roles = new HashSet<>();
+      Set<Role> roles = new HashSet<>();
 
         if(strRoles ==null){
             Role memberRole = roleRepository.findByName(ERole.BORROWER)

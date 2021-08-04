@@ -24,7 +24,8 @@ public class UserResponseDTO {
 
     private String dateOfBirth;
 
-    private Set<Role> roles;
+   private Set<Role> roles;
+
 
     public static UserResponseDTO build(User user){
         return new UserResponseDTO(
