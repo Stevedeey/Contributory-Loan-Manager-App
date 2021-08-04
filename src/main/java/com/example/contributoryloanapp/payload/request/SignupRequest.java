@@ -2,6 +2,7 @@ package com.example.contributoryloanapp.payload.request;
 
 import lombok.Data;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.*;
@@ -36,6 +37,7 @@ public class SignupRequest {
     private String confirmPassword;
 
     private Set<String> role;
+
 
 
 }

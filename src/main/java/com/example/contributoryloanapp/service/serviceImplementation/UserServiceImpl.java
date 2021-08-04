@@ -4,6 +4,7 @@ package com.example.contributoryloanapp.service.serviceImplementation;
 import com.example.contributoryloanapp.dto.UserDTO;
 import com.example.contributoryloanapp.exception.ApiRequestException;
 import com.example.contributoryloanapp.exception.ResourceNotFoundException;
+import com.example.contributoryloanapp.mapper.UserMapper;
 import com.example.contributoryloanapp.model.ERole;
 import com.example.contributoryloanapp.model.Role;
 import com.example.contributoryloanapp.model.User;
@@ -19,6 +20,7 @@ import com.example.contributoryloanapp.utils.DateUtils;
 import com.example.contributoryloanapp.utils.classes.RoleAssignment;
 import com.example.contributoryloanapp.utils.mailService.MailService;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
@@ -29,12 +31,10 @@ import org.springframework.stereotype.Service;
 
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 
@@ -60,6 +60,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private MailService mailService;
+
+
+    @Autowired
+    private  ModelMapper modelMapper;
 
 
     @Override
@@ -243,25 +247,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO updateUser(EditUser user) {
 
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User loggedUser = findUserByEmail(email);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User loggedUser = getLoggedInUser();
 
+
+        loggedUser.setUsername(user.getUserName());
         loggedUser.setFirstName(user.getFirstName());
+        loggedUser.setEmail(user.getEmail());
         loggedUser.setLastName(user.getLastName());
         loggedUser.setGender(user.getGender());
         loggedUser.setDateOfBirth(user.getDateOfBirth());
 
-        if (!userRepository.existsByEmail(user.getEmail())) {
-            loggedUser.setEmail(user.getEmail());
-        } else if (user.getEmail().equals(loggedUser.getEmail())) {
-            loggedUser.setEmail(user.getEmail());
-        } else if (user.getEmail() == null || user.getEmail().equals("")) {
-            loggedUser.setEmail(email);
-        } else throw new ApiRequestException("Error: User with this already exist");
+        if (!userRepository.existsByUsername(user.getUserName())) {
+            loggedUser.setUsername(user.getUserName());
+        } else if (user.getUserName().equals(loggedUser.getUsername())) {
+            loggedUser.setUsername(user.getUserName());
+        } else if (user.getUserName() == null || user.getUserName().equals("")) {
+            loggedUser.setUsername(username);
+        } else throw new ApiRequestException("Error: User with this username already exist");
 
         loggedUser = userRepository.save(loggedUser);
 
         return new UserDTO("Profile successfully updated",
+                loggedUser.getUsername(),
                 loggedUser.getFirstName(),
                 loggedUser.getLastName(),
                 loggedUser.getEmail(),
@@ -279,8 +287,12 @@ public class UserServiceImpl implements UserService {
 
         boolean matches = bCryptPasswordEncoder.matches(updatePasswordRequest.getOldPassword(), user.getPassword());
 
-        if(!passwordMatch||!matches){
+        if(!passwordMatch){
             throw new ApiRequestException("Passwords do not match");
+        }
+
+        if(!matches){
+            throw new ApiRequestException("Old password supplied is wrong");
         }
 
         return true;
@@ -309,11 +321,71 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserDetails() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = findUserByEmail(username);
+        User user = getLoggedInUser();
         return  UserDTO.build(user);
     }
 
-    //More to be added.
+   public User getLoggedInUser(){
+        return userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).orElseThrow(
+                ()->new ApiRequestException("User not logged in")
+        );
+   }
+
+   public Set<UserMapper> getAllUsers()
+   {
+       var users = userRepository.findAll();
+
+       //mapping to ensure that unnecessary members of the user and userDTO are not revealed when viewing all users
+       Set<UserMapper> dtoUserList = users.stream().map(user -> {
+           UserMapper userMapper = modelMapper.map(user, UserMapper.class);
+           return  userMapper;
+       }).collect(Collectors.toSet());
+
+       return dtoUserList;
+   }
+
+   public Set<UserMapper> getUsersByRole(String role){
+
+        Set<UserMapper> userList = getAllUsers();
+        Set<UserMapper> userMapperList = new HashSet<>();
+
+        switch (role.toUpperCase()){
+            case "ADMIN":
+
+                userMapperList =   userList.stream().filter(each -> each.getRoles()
+                        .iterator()
+                        .next()
+                        .getName()
+                        .equals(ERole.ADMIN))
+                        .collect(Collectors.toSet());
+
+                break;
+
+            case "BORROWER":
+
+                userMapperList =   userList.stream().filter(each -> each.getRoles()
+                        .iterator()
+                        .next()
+                        .getName()
+                        .equals(ERole.valueOf("BORROWER")))
+                        .collect(Collectors.toSet());
+
+                break;
+
+            case "MEMBER":
+
+                userMapperList =   userList.stream().filter(each -> each.getRoles()
+                        .iterator()
+                        .next()
+                        .getName()
+                        .equals(ERole.valueOf("MEMBER")))
+                        .collect(Collectors.toSet());
+
+                break;
+            default:
+                break;
+        }
+        return    userMapperList;
+   }
 
 }
