@@ -7,6 +7,7 @@ import com.example.contributoryloanapp.model.User;
 import com.example.contributoryloanapp.payload.request.SignupRequest;
 import com.example.contributoryloanapp.payload.response.auth.ForgotPasswordResponse;
 import com.example.contributoryloanapp.payload.response.auth.EditUser;
+import com.example.contributoryloanapp.payload.response.auth.ResetPassword;
 import com.example.contributoryloanapp.payload.response.auth.UpdatePasswordRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +27,7 @@ public interface UserService {
     Optional<User> getUserByEmail(String email);
     void deactivateResetPasswordToken();
     ResponseEntity<ForgotPasswordResponse> userForgotPassword(HttpServletRequest request, String accountEmail);
+    ResponseEntity<ForgotPasswordResponse> userResetPassword(ResetPassword passwordReset);
     UserDTO updateUser(EditUser user);
     boolean changeUserPassword(User user,  UpdatePasswordRequest updatePasswordRequest);
     boolean checkIfValidOldPassword(User user,  UpdatePasswordRequest updatePasswordRequest);

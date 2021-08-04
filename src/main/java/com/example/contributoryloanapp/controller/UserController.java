@@ -5,6 +5,8 @@ import com.example.contributoryloanapp.exception.ApiRequestException;
 import com.example.contributoryloanapp.mapper.UserMapper;
 import com.example.contributoryloanapp.model.User;
 import com.example.contributoryloanapp.payload.response.auth.EditUser;
+import com.example.contributoryloanapp.payload.response.auth.ForgotPasswordResponse;
+import com.example.contributoryloanapp.payload.response.auth.ResetPassword;
 import com.example.contributoryloanapp.repository.UserRepository;
 import com.example.contributoryloanapp.service.UserService;
 import com.example.contributoryloanapp.service.serviceImplementation.UserServiceImpl;
@@ -15,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +69,18 @@ public class UserController {
         return ResponseEntity.ok(dtoUsersList);
     }
 
+    @PostMapping("/user/password-forgot")
+    @Secured({"MEMBER","BORROWER"})
+    public ResponseEntity<ForgotPasswordResponse> userForgotPassword(@RequestParam("username") String username, HttpServletRequest request){
+        return userService.userForgotPassword(request, username);
+    }
+
+
+    @PostMapping("/user/password-reset")
+    @Secured({"MEMBER","BORROWER"})
+    public ResponseEntity<ForgotPasswordResponse> userResetPassword(@Valid @RequestBody ResetPassword resetPassword) {
+        return userService.userResetPassword(resetPassword);
+    }
 
 
 }
