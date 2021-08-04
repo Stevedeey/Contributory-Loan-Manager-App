@@ -34,21 +34,22 @@ public class RoleAssignment {
                         Role admin = roleRepository.findByName(ERole.ADMIN)
                                 .orElseThrow(() -> new ApiRequestException("Error: Role not found"));
                         roles.add(admin);
-                        System.out.println("THE ROLES STATE AFTER ADMIN CASE: " + roles);
 
                         break;
+
                     case "MEMBER":
                         Role member = roleRepository.findByName(ERole.MEMBER)
                                 .orElseThrow(() -> new ApiRequestException("Error: Role not found"));
                         roles.add(member);
 
-                        System.out.println("THE ROLES STATE AFTER MEMBER CASE: " + roles);
                         break;
+
                     default:
                         Role borrower = roleRepository.findByName(ERole.BORROWER)
                                 .orElseThrow(()-> new ApiRequestException("Error: Role not found"));
                         roles.add(borrower);
-                        System.out.println("THE ROLES STATE AFTER BORROWER : " + roles);
+
+                        break;
                 }
             });
         }
