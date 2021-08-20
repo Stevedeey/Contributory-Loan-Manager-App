@@ -63,6 +63,8 @@ public class User extends BaseModel{
     @Column(name = "password_reset_token", columnDefinition = "TEXT")
     private String passwordResetToken;
 
+
+
     @Column(name = "password_reset_expire_date")
     private String passwordResetExpireDate;
 

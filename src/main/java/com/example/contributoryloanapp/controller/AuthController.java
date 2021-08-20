@@ -79,7 +79,8 @@ public class AuthController {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-       // UserDetails userDetails1 =  userDetailsService.loadUserByUsername(loginRequest.getUsername()); alternative to the line above to retrieve userdetails
+       // UserDetails userDetails1 =  userDetailsService.loadUserByUsername(loginRequest.getUsername());
+        //alternative to the line above to retrieve userdetails
 
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item->item.getAuthority())
@@ -95,4 +96,22 @@ public class AuthController {
     }
 
 
+    @PostMapping("/change-password")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER', 'BORROWER')")
+    @Secured({"ADMIN","MEMBER","BORROWER"})
+    public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest){
+
+        User user = userService.getLoggedInUser();
+
+        userService.checkIfValidOldPassword(user, updatePasswordRequest);
+
+        boolean  isPassWordChanged = userService.changeUserPassword( user,   updatePasswordRequest);
+
+        if(isPassWordChanged){
+
+            return ResponseEntity.ok("Password Changed Successfully");
+        }
+        return new ResponseEntity<>("Operation failed!!", HttpStatus.BAD_REQUEST);
+
+    }
 }
