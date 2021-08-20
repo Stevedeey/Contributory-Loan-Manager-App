@@ -20,4 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByPasswordResetToken(String token);
 
     List<User> findAllByPasswordResetTokenIsNotNull();
+
+
+
 }

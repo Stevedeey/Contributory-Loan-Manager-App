@@ -6,15 +6,18 @@ import com.example.contributoryloanapp.model.Role;
 import com.example.contributoryloanapp.repository.RoleRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Component
 public class RoleAssignment {
 
+//    public Set<Role> assignRole(Set<String> strRoles, RoleRepository roleRepository){
     public Set<Role> assignRole(Set<String> strRoles, RoleRepository roleRepository){
 
-        Set<Role> roles = new HashSet<>();
+      Set<Role> roles = new HashSet<>();
 
         if(strRoles ==null){
             Role memberRole = roleRepository.findByName(ERole.BORROWER)
@@ -31,21 +34,22 @@ public class RoleAssignment {
                         Role admin = roleRepository.findByName(ERole.ADMIN)
                                 .orElseThrow(() -> new ApiRequestException("Error: Role not found"));
                         roles.add(admin);
-                        System.out.println("THE ROLES STATE AFTER ADMIN CASE: " + roles);
 
                         break;
+
                     case "MEMBER":
                         Role member = roleRepository.findByName(ERole.MEMBER)
                                 .orElseThrow(() -> new ApiRequestException("Error: Role not found"));
                         roles.add(member);
 
-                        System.out.println("THE ROLES STATE AFTER MEMBER CASE: " + roles);
                         break;
+
                     default:
                         Role borrower = roleRepository.findByName(ERole.BORROWER)
                                 .orElseThrow(()-> new ApiRequestException("Error: Role not found"));
                         roles.add(borrower);
-                        System.out.println("THE ROLES STATE AFTER BORROWER : " + roles);
+
+                        break;
                 }
             });
         }

@@ -7,6 +7,10 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class EditUser {
+
+    @NotNull(message = "first name cannot be empty")
+    private String userName;
+
     @NotNull(message = "first name cannot be empty")
     private String firstName;
 
