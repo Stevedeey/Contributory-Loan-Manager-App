@@ -103,8 +103,8 @@ public class AuthController {
 
 
     @PostMapping("/change-password")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER', 'BORROWER')")
-    @Secured({"ADMIN","MEMBER","BORROWER"})
+//    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER', 'BORROWER')")
+////    @Secured({"ADMIN","MEMBER","BORROWER"})
     public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest){
 
         User user = userService.getLoggedInUser();
