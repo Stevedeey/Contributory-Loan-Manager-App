@@ -21,7 +21,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User with this:" + username + " not found!!!"));
 
+
         return UserDetailsImpl.build(user);
     }
+
+    //To load user by emain and use email for authntication
+//    @Override
+//    @Transactional
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        User user = userRepository.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("User with this:" + email + " not found!!!"));
+//
+//
+//        return UserDetailsImpl.build(user);
+//    }
+
 
 }
