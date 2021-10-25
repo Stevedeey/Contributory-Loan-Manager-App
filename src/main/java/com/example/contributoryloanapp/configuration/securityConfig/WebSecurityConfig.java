@@ -1,4 +1,4 @@
-package com.example.contributoryloanapp.security;
+package com.example.contributoryloanapp.configuration.securityConfig;
 
 import com.example.contributoryloanapp.security.jwt.AuthEntryPointJwt;
 import com.example.contributoryloanapp.security.jwt.AuthTokenFilter;

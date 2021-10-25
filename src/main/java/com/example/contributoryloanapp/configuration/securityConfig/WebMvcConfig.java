@@ -1,4 +1,4 @@
-package com.example.contributoryloanapp.security;
+package com.example.contributoryloanapp.configuration.securityConfig;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

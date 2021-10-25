@@ -90,6 +90,19 @@ public class UserServiceImpl implements UserService {
 
         }
 
+        if(!isEmailValid(signupRequest.getEmail())){
+            throw new ApiRequestException("Invalid Email Format!");
+
+        }
+
+        if(!isValidPassword(signupRequest.getPassword())){
+            throw new ApiRequestException("Invalid password!");
+        }
+
+        if(!signupRequest.getPassword().equals(signupRequest.getConfirmPassword())){
+
+            throw new ApiRequestException("Password mismatched!");
+        }
 
         User user = new User(signupRequest.getUsername(), signupRequest.getFirstName(),
                 signupRequest.getLastName(), signupRequest.getEmail(), signupRequest.getGender(),
