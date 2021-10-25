@@ -4,7 +4,9 @@ package com.example.contributoryloanapp.service;
 import com.example.contributoryloanapp.dto.UserDTO;
 import com.example.contributoryloanapp.mapper.UserMapper;
 import com.example.contributoryloanapp.model.User;
+import com.example.contributoryloanapp.payload.request.LoginRequest;
 import com.example.contributoryloanapp.payload.request.SignupRequest;
+import com.example.contributoryloanapp.payload.response.JwtResponse;
 import com.example.contributoryloanapp.payload.response.auth.ForgotPasswordResponse;
 import com.example.contributoryloanapp.payload.response.auth.EditUser;
 import com.example.contributoryloanapp.payload.response.auth.ResetPassword;
@@ -36,6 +38,8 @@ public interface UserService {
     User getLoggedInUser();
     Set<UserMapper> getAllUsers();
     Set<UserMapper> getUsersByRole(String role);
+    public JwtResponse authenticateUser(LoginRequest loginRequest);
+    ResponseEntity<String> updatePassword(UpdatePasswordRequest updatePasswordRequest);
 
 
     }

@@ -38,8 +38,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class AuthController {
 
-    @Autowired
-    AuthenticationManager authenticationManager;
 
     @Autowired
     UserService userService;
@@ -47,8 +45,6 @@ public class AuthController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @Autowired
-    JwtUtils jwtUtils;
 
     @Autowired
     UserRepository userRepository;
@@ -67,57 +63,15 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws Exception{
-        Authentication authentication = null;
-        try {
-            authentication = authenticationManager.authenticate(new
-                    UsernamePasswordAuthenticationToken(
-                            loginRequest.getUsername(),
-                             loginRequest.getPassword()));
-
-        } catch (BadCredentialsException e) {
-
-          throw new ApiRequestException("Incorrect Username or Password");
-
-        }
-
-        //context holder holding the authentication object for future validation and authorization
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-       // UserDetails userDetails1 =  userDetailsService.loadUserByUsername(loginRequest.getUsername());
-        //alternative to the line above to retrieve userdetails
-
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item->item.getAuthority())
-                .collect(Collectors.toList());
-
-        return  ResponseEntity.ok(new JwtResponse(jwt,
-                                                    userDetails.getId(),
-                                                    userDetails.getUsername(),
-                                                    userDetails.getEmail(),
-                                                    roles));
+       return new ResponseEntity<>(userService.authenticateUser(loginRequest), HttpStatus.OK);
     }
 
 
     @PostMapping("/change-password")
 //    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER', 'BORROWER')")
-////    @Secured({"ADMIN","MEMBER","BORROWER"})
+////    @Secured({"ADMIN","MEMBER","BORROWER, "})
     public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest){
 
-        User user = userService.getLoggedInUser();
-
-        userService.checkIfValidOldPassword(user, updatePasswordRequest);
-
-        boolean  isPassWordChanged = userService.changeUserPassword( user,   updatePasswordRequest);
-
-        if(isPassWordChanged){
-
-            return ResponseEntity.ok("Password Changed Successfully");
-        }
-        return new ResponseEntity<>("Operation failed!!", HttpStatus.BAD_REQUEST);
-
+        return userService.updatePassword(updatePasswordRequest);
     }
 }
