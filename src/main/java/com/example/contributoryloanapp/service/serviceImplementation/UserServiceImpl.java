@@ -55,26 +55,30 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
 
-    @Autowired
+
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-    @Autowired
     private RoleAssignment roleAssignment;
 
-    @Autowired
     private MailService mailService;
 
-
-    @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
+
+    private JwtUtils jwtUtils;
 
     @Autowired
-    JwtUtils jwtUtils;
-
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, RoleAssignment roleAssignment, MailService mailService, ModelMapper modelMapper, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.roleAssignment = roleAssignment;
+        this.mailService = mailService;
+        this.modelMapper = modelMapper;
+        this.authenticationManager = authenticationManager;
+        this.jwtUtils = jwtUtils;
+    }
 
     @Override
     public User saveUser(SignupRequest signupRequest) {

@@ -23,10 +23,7 @@ public class RoleAssignment {
             Role memberRole = roleRepository.findByName(ERole.BORROWER)
                     .orElseThrow(() -> new ApiRequestException("Error: Role not found for the user"));
 
-            System.out.println("MEMBER ROLE!!1"+ memberRole);
-
             roles.add(memberRole);
-            System.out.println("THE ROLES STATE AFTER NULL: " + roles);
         }else{
             strRoles.forEach(role ->{
                 switch (role){
@@ -36,7 +33,6 @@ public class RoleAssignment {
                         roles.add(admin);
 
                         break;
-
                     case "MEMBER":
                         Role member = roleRepository.findByName(ERole.MEMBER)
                                 .orElseThrow(() -> new ApiRequestException("Error: Role not found"));
